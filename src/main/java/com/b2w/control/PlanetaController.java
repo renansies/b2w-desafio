@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.b2w.model.Planeta;
 import com.b2w.service.PlanetaService;
+import com.b2w.util.SWAPI;
 
 @RestController
 @RequestMapping("planetas")
@@ -37,6 +38,7 @@ public class PlanetaController {
 		List<Planeta> planetas = new ArrayList<Planeta>();
 		
 		for (Planeta planeta : list) {
+			planeta.setAparicoesEmFilmes(SWAPI.getQuantidadeFilmes(planeta.getNome()));
 			planeta.add(linkTo(methodOn(PlanetaController.class).buscarPorId(planeta.getItemId())).withSelfRel());
 			planetas.add(planeta);
 		}
@@ -47,7 +49,8 @@ public class PlanetaController {
 	@ResponseBody
 	public Planeta buscarPorId(@PathVariable String id) {
 		Planeta planeta = planetaService.buscarPorId(id);
-		planeta.add(linkTo(methodOn(PlanetaController.class).buscar("")).withRel("Todos os Planetas"));
+		planeta.setAparicoesEmFilmes(SWAPI.getQuantidadeFilmes(planeta.getNome()));
+		planeta.add(linkTo(methodOn(PlanetaController.class).buscar(null)).withRel("Todos os Planetas"));
 
 		return planeta;
 	}
@@ -57,6 +60,7 @@ public class PlanetaController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Planeta inserir(@RequestBody Planeta planeta) {
 		Planeta planetaCriado = planetaService.inserir(planeta);
+		planeta.setAparicoesEmFilmes(SWAPI.getQuantidadeFilmes(planeta.getNome()));
 		planetaCriado.add(linkTo(methodOn(PlanetaController.class).buscar("")).withRel("Todos os Planetas"));
 		
 		return planetaCriado;

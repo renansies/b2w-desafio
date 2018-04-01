@@ -1,6 +1,7 @@
 package com.b2w.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -15,6 +16,9 @@ public class Planeta extends ResourceSupport{
 	private String nome;
 	private String clima;
 	private String terreno;
+	
+	@Transient
+	private Integer aparicoesEmFilmes;
 	
 	public Planeta(String nome, String clima, String terreno) {
 		this.nome = nome;
@@ -58,5 +62,11 @@ public class Planeta extends ResourceSupport{
 		this.terreno = terreno;
 	}
 
-	
+	public Integer getAparicoesEmFilmes() {
+		return aparicoesEmFilmes;
+	}
+
+	public void setAparicoesEmFilmes(Integer aparicoesEmFilmes) {
+		this.aparicoesEmFilmes = aparicoesEmFilmes;
+	}
 }
