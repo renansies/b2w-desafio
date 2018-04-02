@@ -49,7 +49,7 @@ public class PlanetaController {
 	@ResponseBody
 	public Planeta buscarPorId(@PathVariable String id) {
 		Planeta planeta = planetaService.buscarPorId(id);
-		planeta.setAparicoesEmFilmes(SWAPI.getQuantidadeFilmes(planeta.getNome()));
+		//planeta.setAparicoesEmFilmes(SWAPI.getQuantidadeFilmes(planeta.getNome()));
 		planeta.add(linkTo(methodOn(PlanetaController.class).buscar(null)).withRel("Todos os Planetas"));
 
 		return planeta;
@@ -60,7 +60,7 @@ public class PlanetaController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Planeta inserir(@RequestBody Planeta planeta) {
 		Planeta planetaCriado = planetaService.inserir(planeta);
-		planeta.setAparicoesEmFilmes(SWAPI.getQuantidadeFilmes(planeta.getNome()));
+		//planeta.setAparicoesEmFilmes(SWAPI.getQuantidadeFilmes(planeta.getNome()));
 		planetaCriado.add(linkTo(methodOn(PlanetaController.class).buscar("")).withRel("Todos os Planetas"));
 		
 		return planetaCriado;
